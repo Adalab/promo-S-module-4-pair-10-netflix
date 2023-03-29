@@ -111,3 +111,34 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2023-03-28 11:36:23
+
+CREATE TABLE rel_movies_users (
+idMovie_User INT auto_increment PRIMARY KEY NOT NULL, 
+fk_movies INT NOT NULL, 
+fk_users INT NOT NULL
+);
+
+CREATE TABLE rel_movies_actors (
+idMovie_Actor INT auto_increment PRIMARY KEY NOT NULL, 
+fk_movies INT NOT NULL, 
+fk_actors INT NOT NULL
+);
+
+INSERT INTO rel_movies_users (fk_users, fk_movies ) VALUES ( 1, 1), (3, 2), ( 1, 2);
+SELECT * FROM users;
+SELECT * FROM rel_movies_users;
+
+INSERT INTO rel_movies_actors (fk_actors, fk_movies ) VALUES (1, 3), (2, 2), (3, 1);
+
+SELECT users.nameNetflix, movies.title
+FROM users, movies, rel_movies_users
+WHERE rel_movies_users.fk_users = users.idUser and rel_movies_users.fk_movies = movies.idMovie;
+
+DELETE FROM rel_movies_users
+WHERE idMovie_User IN (4, 6);
+
+SELECT actors.nameActor, movies.title
+FROM actors INNER JOIN rel_movies_actors
+ON actors.idActor = rel_movies_actors.fk_actors
+INNER JOIN movies
+ON movies.idMovie = rel_movies_actors.fk_movies;
