@@ -8,7 +8,7 @@ import Login from './Login';
 import Profile from './Profile';
 import SignUp from './SignUp';
 // services
-import apiMovies from '../services/api-movies';
+import apimovies from '../services/api-movies';
 import apiUser from '../services/api-user';
 import router from '../services/router';
 
@@ -38,8 +38,8 @@ const App = () => {
       gender: allMoviesOptionGender,
       sort: allMoviesOptionSort
     };
-    apiMovies.getMoviesFromApi(params).then(response => {
-      setAppMovies(response.movies);
+    apimovies.getMoviesFromApi(params.gender).then(response => {
+      setAppMovies(response);
     });
   }, [allMoviesOptionGender, allMoviesOptionSort]);
 

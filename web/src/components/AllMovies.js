@@ -23,8 +23,8 @@ const AllMovies = props => {
             value={props.allMoviesOptionGender}
             onChange={handleOptions}
           >
-            <option value="">Todas</option>
-            <option value="Drama">Drama</option>
+            <option value="Todas">Todas</option>
+            <option value="Crimen">Crimen</option>
             <option value="Comedia">Comedia</option>
           </select>
         </div>

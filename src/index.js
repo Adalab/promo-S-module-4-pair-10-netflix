@@ -5,7 +5,7 @@ const mysql = require('mysql2/promise');
 // create and config server
 const server = express();
 server.use(cors());
-server.use(express.json());
+server.use(express.json({ limit: '75mb' }));
 
 // init express aplication
 const serverPort = 4000;
@@ -14,6 +14,8 @@ server.listen(serverPort, () => {
 });
 
 // conectar a la base datos 
+let connection;
+
 mysql
   .createConnection({
     host: 'localhost',
@@ -21,11 +23,12 @@ mysql
     user: 'root',
     password: '4467',
   })
-  .then(connection => {
+  .then(conn => {
+    connection = conn;
     connection
       .connect()
       .then(() => {
-        return connection.query('SELECT * FROM movies');
+        console.log(`Conexión establecida con la base de datos (identificador=${connection.threadId})`);
       })
       .catch((err) => {
         console.error('Error de conexion: ' + err.stack);
@@ -35,11 +38,26 @@ mysql
     console.error('Error de configuración: ' + err.stack);
   });
 
+console.log(connection);
 //petición al servidor
 server.get('/movies', (req, res) => {
-  res.send({
-    success: true,
-    movies: mysql
-  })
-  console.log(mysql);
-})
+  console.log(req.query.gender)
+  if (req.query.gender === 'Todas') {
+    connection
+      .query('SELECT * FROM movies')
+  } else {
+    connection
+      .query('SELECT * FROM movies WHERE gender = ?', [req.query.gender])
+  }
+  connection
+    .then(([results, fields]) => {
+      console.log('Informacion recuperada');
+      results.forEach((result) => {
+        console.log(result);
+      });
+      res.json(results)
+    })
+    .catch((err) => {
+      throw err;
+    });
+});
