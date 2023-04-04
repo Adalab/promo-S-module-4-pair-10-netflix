@@ -2,7 +2,7 @@
 
 const getMoviesFromApi = (gender, sort) => {
   console.log(getMoviesFromApi);
-  return fetch(`http://localhost:4000/movies/?gender=${gender}&sort=${sort}`)
+  return fetch(`http://localhost:4000/movies/?gender=${gender}`)
     .then(response => response.json())
     .then((data) => {
       return data;
@@ -14,3 +14,5 @@ const objToExport = {
 };
 
 export default objToExport;
+
+// http://localhost:4000/movies/?gender=${comedia}&sort=${asc}

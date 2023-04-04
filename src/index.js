@@ -40,25 +40,25 @@ mysql
 
 console.log(connection);
 //petición al servidor
+
 server.get('/movies', (req, res) => {
   console.log(req.query.gender)
-  if (req.query.gender === '' || req.query.gender ==='Todas') {
+  if (req.query.gender === 'Todas' ||req.query.gender === '' ) {
     connection
-      .query('SELECT * FROM movies ORDER BY title ?',[parseInt(req.query.sort)])
+      .query('SELECT * FROM movies')
       .then(([results, fields]) => {
       console.log('Informacion recuperada');
       results.forEach((result) => {
-      console.log(result);
+        console.log(result);
       });
       res.json(results)
-      
     })
     .catch((err) => {
       throw err;
     });
   } else {
     connection
-      .query('SELECT * FROM movies WHERE gender = ? ORDER BY title ?', [req.query.gender, parseInt(req.query.sort) ])
+      .query('SELECT * FROM movies WHERE gender = ?', [req.query.gender])
       .then(([results, fields]) => {
       console.log('Informacion recuperada');
       results.forEach((result) => {
@@ -70,6 +70,46 @@ server.get('/movies', (req, res) => {
       throw err;
     });
   }
+
+});
+
+// server.get('/movies', (req, res) => {
+//   console.log(req.query.gender)
+ 
+//   let query;
+//   if(req.querysort === 'asc'){
+//     query='SELECT * FROM movies WHERE gender = ? ORDER BY title ASC'
+//   } else{
+//     'SELECT * FROM movies WHERE gender = ? ORDER BY title DESC'
+//   } 
+//   if (req.query.gender === '' || req.query.gender ==='Todas') {
+//     connection
+//       .query(query,[req.query.gender])
+//       .then(([results, fields]) => {
+//       console.log('Informacion recuperada');
+//       results.forEach((result) => {
+//       console.log(result);
+//       });
+//       res.json(results)
+      
+//     })
+//     .catch((err) => {
+//       throw err;
+//     });
+//   } else {
+//     connection
+//       .query(query, [req.query.gender])
+//       .then(([results, fields]) => {
+//       console.log('Informacion recuperada');
+//       results.forEach((result) => {
+//         console.log(result);
+//       });
+//       res.json(results)
+//     })
+//     .catch((err) => {
+//       throw err;
+//     });
+//   }
 
   // if (req.query.sort === 'asc') {
     // connection
@@ -86,4 +126,7 @@ server.get('/movies', (req, res) => {
     //   throw err;
     // });
 //   // }
-});
+// });
+
+
+
