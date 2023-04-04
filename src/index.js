@@ -39,7 +39,7 @@ mysql
   });
 
 // console.log(connection);
-//petición al servidor
+//petición de las peliculas al servidor filtrando por genero
 
 server.get('/movies', (req, res) => {
   console.log(req.query.gender)
@@ -72,12 +72,12 @@ server.get('/movies', (req, res) => {
   }
 });
 
+// peticion al servidor para hacer login
 server.post('/login', (req, res) => {
   console.log(req.body);
   connection
       .query('SELECT passwordUser, email FROM users WHERE passwordUser = ? AND email= ?', [req.body.password, req.body.email])
       .then(([results]) => {
-        console.log(results);
         let response;
         if (results.length){
           response = {
@@ -96,6 +96,12 @@ server.post('/login', (req, res) => {
       throw err;
     });
 })
+
+// servidor de estáticos
+server.use(express.static('./src/public-react'))
+server.use(express.static('./src/public-movies-images'))
+
+
 
 // server.get('/movies', (req, res) => {
 //   console.log(req.query.gender)
