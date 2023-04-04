@@ -21,7 +21,7 @@ mysql
     host: 'localhost',
     database: 'netflix',
     user: 'root',
-    password: 'Jul.4619',
+    password: '4467',
   })
   .then(conn => {
     connection = conn;
@@ -38,7 +38,7 @@ mysql
     console.error('Error de configuración: ' + err.stack);
   });
 
-console.log(connection);
+// console.log(connection);
 //petición al servidor
 
 server.get('/movies', (req, res) => {
@@ -46,7 +46,7 @@ server.get('/movies', (req, res) => {
   if (req.query.gender === 'Todas' ||req.query.gender === '' ) {
     connection
       .query('SELECT * FROM movies')
-      .then(([results, fields]) => {
+      .then(([results]) => {
       console.log('Informacion recuperada');
       results.forEach((result) => {
         console.log(result);
@@ -59,7 +59,7 @@ server.get('/movies', (req, res) => {
   } else {
     connection
       .query('SELECT * FROM movies WHERE gender = ?', [req.query.gender])
-      .then(([results, fields]) => {
+      .then(([results]) => {
       console.log('Informacion recuperada');
       results.forEach((result) => {
         console.log(result);
@@ -70,8 +70,32 @@ server.get('/movies', (req, res) => {
       throw err;
     });
   }
-
 });
+
+server.post('/login', (req, res) => {
+  console.log(req.body);
+  connection
+      .query('SELECT passwordUser, email FROM users WHERE passwordUser = ? AND email= ?', [req.body.password, req.body.email])
+      .then(([results]) => {
+        console.log(results);
+        let response;
+        if (results.length){
+          response = {
+            "success": true,
+            "userId": "id_de_la_usuaria_encontrada"
+          }
+        } else {
+         response=  {
+              "success": false,
+              "errorMessage": "Usuaria/o no encontrada/o"
+            }
+        }
+      res.json(response)
+    })
+    .catch((err) => {
+      throw err;
+    });
+})
 
 // server.get('/movies', (req, res) => {
 //   console.log(req.query.gender)
