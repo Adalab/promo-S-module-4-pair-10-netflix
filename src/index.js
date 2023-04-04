@@ -21,7 +21,7 @@ mysql
     host: 'localhost',
     database: 'netflix',
     user: 'root',
-    password: '4467',
+    password: 'Jul.4619',
   })
   .then(conn => {
     connection = conn;
@@ -42,15 +42,24 @@ console.log(connection);
 //petición al servidor
 server.get('/movies', (req, res) => {
   console.log(req.query.gender)
-  if (req.query.gender === 'Todas') {
+  if (req.query.gender === '' || req.query.gender ==='Todas') {
     connection
-      .query('SELECT * FROM movies')
+      .query('SELECT * FROM movies ORDER BY title ?',[parseInt(req.query.sort)])
+      .then(([results, fields]) => {
+      console.log('Informacion recuperada');
+      results.forEach((result) => {
+      console.log(result);
+      });
+      res.json(results)
+      
+    })
+    .catch((err) => {
+      throw err;
+    });
   } else {
     connection
-      .query('SELECT * FROM movies WHERE gender = ?', [req.query.gender])
-  }
-  connection
-    .then(([results, fields]) => {
+      .query('SELECT * FROM movies WHERE gender = ? ORDER BY title ?', [req.query.gender, parseInt(req.query.sort) ])
+      .then(([results, fields]) => {
       console.log('Informacion recuperada');
       results.forEach((result) => {
         console.log(result);
@@ -60,4 +69,21 @@ server.get('/movies', (req, res) => {
     .catch((err) => {
       throw err;
     });
+  }
+
+  // if (req.query.sort === 'asc') {
+    // connection
+    // .query('SELECT * FROM movies ORDER BY title ?', [req.query.sort])
+    // .then(([results, fields]) => {
+    //   // console.log('Informacion recuperada');
+    //   // results.forEach((result) => {
+    //   //   console.log(result);
+    //   // });
+    //   console.log('holiis')
+    //   res.json(results)
+    // })
+    // .catch((err) => {
+    //   throw err;
+    // });
+//   // }
 });
