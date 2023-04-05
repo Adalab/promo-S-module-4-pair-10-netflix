@@ -15,4 +15,4 @@ const objToExport = {
 
 export default objToExport;
 
-// http://localhost:4000/movies/?gender=${comedia}&sort=${asc}
+// http://localhost:4000/movies/?gender=${comedia}&sort=${sort}
