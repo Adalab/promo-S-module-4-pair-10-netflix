@@ -116,7 +116,9 @@ server.listen(serverPort, () => {
 // Conexión listado de películas
 
 server.get ('/movies_all_mongo', (req,res)=>{
-  Movies.find({})
+  let genderQuery = req.query.gender
+  if (genderQuery !== ''){
+      Movies.find({gender:{$eq: genderQuery}})
   .then(docs=>{
     console.log(docs)
     res.json({
@@ -128,6 +130,21 @@ server.get ('/movies_all_mongo', (req,res)=>{
   .catch((e)=>{
     throw e;
   })
+  } else {
+      Movies.find({})
+  .then(docs=>{
+    console.log(docs)
+    res.json({
+      success: true,
+      movies: docs,
+
+    });
+  })
+  .catch((e)=>{
+    throw e;
+  })
+  }
+
 })
 
 
