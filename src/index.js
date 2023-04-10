@@ -5,7 +5,7 @@ const mysql = require('mysql2/promise');
 // create and config server
 const server = express();
 server.use(cors());
-server.use(express.json({ limit: '75mb' }));
+server.use(express.json({ limit: '150mb' }));
 
 // init express aplication
 const serverPort = 4000;
@@ -21,7 +21,7 @@ mysql
     host: 'localhost',
     database: 'netflix',
     user: 'root',
-    password: '4467',
+    password: 'Jul.4619',
   })
   .then(conn => {
     connection = conn;
@@ -67,34 +67,52 @@ server.get('/movies', (req, res) => {
 });
 
 // peticion al servidor para hacer login
-// server.post('/login', (req, res) => {
-//   console.log(req.body);
-//   connection
-//     .query('SELECT passwordUser, email FROM users WHERE passwordUser = ? AND email= ?', [req.body.password, req.body.email])
-//     .then(([results]) => {
-//       let response;
-//       if (results.length) {
-//         response = {
-//           "success": true,
-//           "userId": "id_de_la_usuaria_encontrada"
-//         }
-//       } else {
-//         response = {
-//           "success": false,
-//           "errorMessage": "Usuaria/o no encontrada/o"
-//         }
-//       }
-//       res.json(response)
-//     })
-//     .catch((err) => {
-//       throw err;
-//     });
-// })
+server.post('/login', (req, res) => {
+  console.log(req.body);
+  connection
+    .query('SELECT passwordUser, email FROM users WHERE passwordUser = ? AND email= ?', [req.body.password, req.body.email])
+    .then(([results]) => {
+      let response;
+      if (results.length) {
+        response = {
+          "success": true,
+          "userId": "id_de_la_usuaria_encontrada"
+        }
+      } else {
+        response = {
+          "success": false,
+          "errorMessage": "Usuaria/o no encontrada/o"
+        }
+      }
+      res.json(response)
+    })
+    .catch((err) => {
+      throw err;
+    });
+})
+
+server.get('/movie/:movieId', (req,res)=>{
+  const movieId = parseInt(req.params.movieId);
+  connection
+    .query(`SELECT * FROM movies, actors, rel_movies_actors WHERE idMovie = ${movieId} AND fk_actors = idActor AND fk_movies = idMovie`)
+    .then(([results]) => {
+      console.log(results)
+      res.render('template', results[0])
+    })
+    .catch((err) => {
+      throw err
+    });
+
+})
+
+//configurar el motor de plantillas
+
+server.set('view engine', 'ejs')
 
 // servidor de estáticos
 server.use(express.static('./src/public-react'))
 server.use(express.static('./src/public-movies-images'))
-
+//ACTUALIZAR!!!!!!!!!!!
 
 
 

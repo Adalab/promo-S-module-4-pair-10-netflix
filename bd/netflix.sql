@@ -1,6 +1,6 @@
--- MySQL dump 10.13  Distrib 8.0.32, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.31, for macos12 (x86_64)
 --
--- Host: 127.0.0.1    Database: netflix
+-- Host: localhost    Database: netflix
 -- ------------------------------------------------------
 -- Server version	8.0.32
 
@@ -28,7 +28,7 @@ CREATE TABLE `actors` (
   `lastname` varchar(45) NOT NULL,
   `country` varchar(45) NOT NULL,
   `birthday` date DEFAULT NULL,
-  `image` varchar(200) DEFAULT NULL,
+  `imageActor` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`idActor`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -67,7 +67,7 @@ CREATE TABLE `movies` (
 
 LOCK TABLES `movies` WRITE;
 /*!40000 ALTER TABLE `movies` DISABLE KEYS */;
-INSERT INTO `movies` VALUES (1,'Pulp Fiction','Crimen','https://pics.filmaffinity.com/pulp_fiction-210382116-large.jpg','Top 10',1994),(2,'La vita è bella','Comedia','https://pics.filmaffinity.com/la_vita_e_bella-646167341-mmed.jpg','Top 10',1997),(3,'Forrest Gump','Comedia','https://pics.filmaffinity.com/forrest_gump-212765827-mmed.jpg','Top 10',1994);
+INSERT INTO `movies` VALUES (1,'Pulp Fiction','Crimen','http://localhost:4000/Pulp-Fiction.jpeg','Top 10',1994),(2,'La vita è bella','Comedia','http://localhost:4000/la-vita-e-bella.jpg','Top 10',1997),(3,'Forrest Gump','Comedia','http://localhost:4000/ForrestGump.jpeg','Top 10',1994);
 /*!40000 ALTER TABLE `movies` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -158,4 +158,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-04-10 10:44:24
+-- Dump completed on 2023-04-10 17:55:07
