@@ -1,8 +1,6 @@
-CREATE DATABASE  IF NOT EXISTS `netflix` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `netflix`;
--- MySQL dump 10.13  Distrib 8.0.31, for macos12 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.32, for Win64 (x86_64)
 --
--- Host: localhost    Database: netflix
+-- Host: 127.0.0.1    Database: netflix
 -- ------------------------------------------------------
 -- Server version	8.0.32
 
@@ -74,6 +72,56 @@ INSERT INTO `movies` VALUES (1,'Pulp Fiction','Crimen','https://pics.filmaffinit
 UNLOCK TABLES;
 
 --
+-- Table structure for table `rel_movies_actors`
+--
+
+DROP TABLE IF EXISTS `rel_movies_actors`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `rel_movies_actors` (
+  `idMovie_Actor` int NOT NULL AUTO_INCREMENT,
+  `fk_movies` int NOT NULL,
+  `fk_actors` int NOT NULL,
+  PRIMARY KEY (`idMovie_Actor`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rel_movies_actors`
+--
+
+LOCK TABLES `rel_movies_actors` WRITE;
+/*!40000 ALTER TABLE `rel_movies_actors` DISABLE KEYS */;
+INSERT INTO `rel_movies_actors` VALUES (1,3,1),(2,2,2),(3,1,3);
+/*!40000 ALTER TABLE `rel_movies_actors` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rel_movies_users`
+--
+
+DROP TABLE IF EXISTS `rel_movies_users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `rel_movies_users` (
+  `idMovie_User` int NOT NULL AUTO_INCREMENT,
+  `fk_movies` int NOT NULL,
+  `fk_users` int NOT NULL,
+  PRIMARY KEY (`idMovie_User`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rel_movies_users`
+--
+
+LOCK TABLES `rel_movies_users` WRITE;
+/*!40000 ALTER TABLE `rel_movies_users` DISABLE KEYS */;
+INSERT INTO `rel_movies_users` VALUES (1,1,1),(3,2,1),(5,2,3);
+/*!40000 ALTER TABLE `rel_movies_users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `users`
 --
 
@@ -97,7 +145,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'laura_dev','laura','Laura','laura@gmail.com','Standard'),(3,'ester_dev','ester','Ester','ester@gmail.com','Standard');
+INSERT INTO `users` VALUES (1,'lore_dev','12345678','La Lore','lore@gmail.com','Standard'),(2,'macu_dev','12345678','La Macu','macu@hotmail.com','Standard');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -110,35 +158,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-03-28 11:36:23
-
-CREATE TABLE rel_movies_users (
-idMovie_User INT auto_increment PRIMARY KEY NOT NULL, 
-fk_movies INT NOT NULL, 
-fk_users INT NOT NULL
-);
-
-CREATE TABLE rel_movies_actors (
-idMovie_Actor INT auto_increment PRIMARY KEY NOT NULL, 
-fk_movies INT NOT NULL, 
-fk_actors INT NOT NULL
-);
-
-INSERT INTO rel_movies_users (fk_users, fk_movies ) VALUES ( 1, 1), (3, 2), ( 1, 2);
-SELECT * FROM users;
-SELECT * FROM rel_movies_users;
-
-INSERT INTO rel_movies_actors (fk_actors, fk_movies ) VALUES (1, 3), (2, 2), (3, 1);
-
-SELECT users.nameNetflix, movies.title
-FROM users, movies, rel_movies_users
-WHERE rel_movies_users.fk_users = users.idUser and rel_movies_users.fk_movies = movies.idMovie;
-
-DELETE FROM rel_movies_users
-WHERE idMovie_User IN (4, 6);
-
-SELECT actors.nameActor, movies.title
-FROM actors INNER JOIN rel_movies_actors
-ON actors.idActor = rel_movies_actors.fk_actors
-INNER JOIN movies
-ON movies.idMovie = rel_movies_actors.fk_movies;
+-- Dump completed on 2023-04-10 10:44:24

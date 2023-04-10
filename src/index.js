@@ -47,7 +47,7 @@ server.get('/movies', (req, res) => {
   let gender = req.query.gender
   console.log(order);
 
-  if (req.query.gender === 'Todas' || req.query.gender === '') {
+  if (req.query.gender === '') {
     gender = '%';
 
   }
