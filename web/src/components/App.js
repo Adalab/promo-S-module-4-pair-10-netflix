@@ -34,14 +34,15 @@ const App = () => {
   Como queremos que el back devuelva las películas filtradas por género y ordenadas por nombre estamos pasando a getMoviesFromApi estos dos valores.
   */
   useEffect(() => {
-    const params = {
-      gender: allMoviesOptionGender,
-      sort: allMoviesOptionSort
-    };
-    apimovies.getMoviesFromApi(params.gender, params.sort).then(response => {
-      setAppMovies(response);
+    // const params = {
+    //   gender: allMoviesOptionGender,
+    //   sort: allMoviesOptionSort
+    // };
+    apimovies.getMoviesFromApi().then(response => {
+      setAppMovies(response.movies);
     });
   }, [allMoviesOptionGender, allMoviesOptionSort]);
+
 
   // (params.gender,params.sort)
   /*

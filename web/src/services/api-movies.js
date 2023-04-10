@@ -1,8 +1,9 @@
 // login
 
 const getMoviesFromApi = (gender, sort) => {
-  console.log(getMoviesFromApi);
-  return fetch(`http://localhost:4000/movies/?gender=${gender}&sort=${sort}`)
+  console.log('películas de Mongoi');
+  // return fetch(`http://localhost:4000/movies/?gender=${gender}&sort=${sort}`)
+  return fetch ('//localhost:4000/movies_all_mongo')
     .then(response => response.json())
     .then((data) => {
       return data;
