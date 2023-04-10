@@ -38,15 +38,12 @@ const App = () => {
       gender: allMoviesOptionGender,
       sort: allMoviesOptionSort
     };
-    apimovies.getMoviesFromApi(params.gender).then(response => {
+    apimovies.getMoviesFromApi(params.gender, params.sort).then(response => {
       setAppMovies(response);
     });
-    // apimovies.getMoviesFromApi(params.sort).then(response => {
-    //   setAppMovies(response);
-    // });
   }, [allMoviesOptionGender, allMoviesOptionSort]);
 
-// (params.gender,params.sort)
+  // (params.gender,params.sort)
   /*
   useEffect: obtener el perfil de la usuaria.
   Se ejecuta cuando userId cambian de valor, es decir, cuando pasa de un string vacío a un strin relleno con el id de la usuaria.
