@@ -14,6 +14,7 @@ dbConnect();
 const Movies = require ('../models/movies');
 const Actors = require ('../models/actors');
 const Users = require ('../models/users');
+const Favorites = require ('../models/favorites');
 
 // init express aplication
 const serverPort = process.env.PORT || 4000;
@@ -115,23 +116,24 @@ server.listen(serverPort, () => {
 
 // Conexión listado de películas
 
-server.get ('/movies_all_mongo', (req,res)=>{
-  let genderQuery = req.query.gender
+server.get ('/movies_all_mongo/', (req,res)=>{
+  let genderQuery = req.query.gender.toLocaleLowerCase();
+  const orderQuery = req.query.sort === 'asc' ? 1 : -1;
+  console.log(req.query);
   if (genderQuery !== ''){
-      Movies.find({gender:{$eq: genderQuery}})
+  Movies.find({gender:genderQuery}).sort({title: orderQuery }) 
   .then(docs=>{
     console.log(docs)
     res.json({
       success: true,
       movies: docs,
-
     });
   })
   .catch((e)=>{
     throw e;
   })
   } else {
-      Movies.find({})
+      Movies.find({}).sort({title: orderQuery})
   .then(docs=>{
     console.log(docs)
     res.json({
@@ -147,6 +149,16 @@ server.get ('/movies_all_mongo', (req,res)=>{
 
 })
 
+server.post('/favorites-add', (req, res) => {
+  
+  Favorites.find({})
+  console.log(Favorites)
+  // .populate('users')
+  .then((response)=> res.json(response))
+  .catch((e)=>{
+    console.log(e);
+  })
+});
 
 //configurar el motor de plantillas
 
@@ -156,6 +168,8 @@ server.set('view engine', 'ejs')
 server.use(express.static('./src/public-react'))
 server.use(express.static('./src/public-movies-images'))
 //ACTUALIZAR!!!!!!!!!!!
+
+
 
 
 
