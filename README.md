@@ -38,33 +38,33 @@ Por favor marca a continuación los ejercicios que hayáis terminado:
 **4.6 Express JS II:**
 
 - [x] 1. Filtrar por género
-- [ ] 2. Ordenar por nombre
+- [x] 2. Ordenar por nombre
 - [x] 3. Login
-- [ ] 4. Bonus: Mantén logueada a la usuaria
+- [x] 4. Bonus: Mantén logueada a la usuaria
 
 **4.7 Express JS III:**
 
 - [x] 1. Servidor de estáticos para React
 - [x] 2. Servidor de estáticos para las fotos
-- [ ] 3. Crea un motor de plantillas
+- [x] 3. Crea un motor de plantillas
 
-  - [ ] 1. Obtener el id de la película a renderizar
-  - [ ] 2. Obtener la película
-  - [ ] 3. Renderiza una página cualquiera
-  - [ ] 4. Renderiza la película
-  - [ ] 5. Añade estilos
+  - [x] 1. Obtener el id de la película a renderizar
+  - [x] 2. Obtener la película
+  - [x] 3. Renderiza una página cualquiera
+  - [x] 4. Renderiza la película
+  - [x] 5. Añade estilos
 
 **4.8 Mongo I:**
 
-- [ ] 1. Configura MongoDB Atlas
-- [ ] 2. Crea la bases de datos Netflix
+- [x] 1. Configura MongoDB Atlas
+- [x] 2. Crea la bases de datos Netflix
 
 **4.9 Mongo II:**
 
-- [ ] 1. Conexión con la bases de datos de MongoDB
-- [ ] 2. Modelos para las colecciones
-- [ ] 3. Listado de películas
-- [ ] 4. Ordena por nombre
+- [x] 1. Conexión con la bases de datos de MongoDB
+- [x] 2. Modelos para las colecciones
+- [x] 3. Listado de películas
+- [x] 4. Ordena por nombre
 
 **4.10 Mongo III:**
 
@@ -79,7 +79,7 @@ Por favor marca a continuación los ejercicios que hayáis terminado:
 
 **Extras:**
 
-- [ ] 1. Registro de nuevas usuarias
+- [x] 1. Registro de nuevas usuarias
 - [ ] 2. Dos contraseñas en el registro
 - [ ] 3. Comprueba la fortaleza de la contraseña
 - [ ] 4. Comprueba que no haya una usuaria registrada con el mismo email
