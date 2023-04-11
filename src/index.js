@@ -147,20 +147,42 @@ server.get ('/movies_all_mongo/', (req,res)=>{
   })
   }
 
-})
-
-server.post('/favorites-add', (req, res) => {
-  
-  Favorites.find({})
-  console.log(Favorites)
-  // .populate('users')
-  .then((response)=> res.json(response))
-  .catch((e)=>{
-    console.log(e);
-  })
 });
 
+// server.post('/favorites-add', (req, res) => {
+//   Favorites.find({idMovie: ObjectId('643434a6fc13dba6575b56e8')})
+  
+//   // .populate('users')
+//   .then((response)=> res.json(response))
+//   console.log(response)
+//   .catch((e)=>{
+//     console.log(e);
+//   })
+
+
+// });
+
+
+server.post('/signup', (req,res)=>{
+  const email= req.body.email;
+  const password = req.body.password;
+  const newUser = req.body;
+  Users.create(newUser)
+  .then((docs)=>{
+    res.json({
+      "success": true,
+      "userId": "nuevo-id-añadido"
+    })
+  })
+  .catch((e)=> {
+    throw(e)
+  })
+
+})
+
 //configurar el motor de plantillas
+
+
 
 server.set('view engine', 'ejs')
 
