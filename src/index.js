@@ -27,11 +27,9 @@ server.listen(serverPort, () => {
 server.get('/movies_all_mongo/', (req, res) => {
   let genderQuery = req.query.gender.toLocaleLowerCase();
   const orderQuery = req.query.sort === 'asc' ? 1 : -1;
-  console.log(req.query);
   if (genderQuery !== '') {
     Movies.find({ gender: genderQuery }).sort({ title: orderQuery })
       .then(docs => {
-        console.log(docs)
         res.json({
           success: true,
           movies: docs,
@@ -43,7 +41,6 @@ server.get('/movies_all_mongo/', (req, res) => {
   } else {
     Movies.find({}).sort({ title: orderQuery })
       .then(docs => {
-        console.log(docs)
         res.json({
           success: true,
           movies: docs,
@@ -54,7 +51,6 @@ server.get('/movies_all_mongo/', (req, res) => {
       })
   }
 });
-
 
 // Añadir peli a favoritos (manualmente)
 server.post('/favorites-add', (req, res) => {
@@ -72,21 +68,6 @@ server.post('/favorites-add', (req, res) => {
 });
 
 
-// obtener favoritos (no funciona)
-server.get('/favorites-list', (req, res) => {
-  console.log('Karlins viajera');
-  query = Favorites.find()
-    .populate({
-      path: 'users',
-      select: 'userNetflix'
-    })
-    .then((result) => {
-      console.log(result);
-      res.json(result)
-    })
-    .catch((err) => { 'Error', err })
-})
-
 // endpoint para registrarse en la app
 server.post('/signup', (req, res) => {
   const newUser = req.body;
@@ -100,7 +81,6 @@ server.post('/signup', (req, res) => {
     .catch((e) => {
       throw (e)
     })
-
 })
 
 //configurar el motor de plantillas
@@ -110,7 +90,6 @@ server.set('view engine', 'ejs')
 // servidor de estáticos
 server.use(express.static('./src/public-react'))
 server.use(express.static('./src/public-movies-images'))
-//ACTUALIZAR!!!!!!!!!!!
 
 
 
