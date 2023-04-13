@@ -21,7 +21,7 @@ mysql
     host: 'localhost',
     database: 'netflix',
     user: 'root',
-    password: 'Jul.4619',
+    password: '4467',
   })
   .then(conn => {
     connection = conn;
@@ -38,39 +38,30 @@ mysql
     console.error('Error de configuración: ' + err.stack);
   });
 
-// console.log(connection);
-//petición de las peliculas al servidor filtrando por genero
+//petición de las peliculas al servidor filtrando por genero y ordenando alfabéticamente por título
 
 server.get('/movies', (req, res) => {
-  console.log(req.query.gender)
-  const order = req.query.sort
-  let gender = req.query.gender
-  console.log(order);
-
+  const order = req.query.sort;
+  let gender = req.query.gender;
   if (req.query.gender === '') {
     gender = '%';
-
   }
   connection
     .query(`SELECT * FROM movies WHERE gender LIKE ? ORDER BY title ${order}`, [gender])
     .then(([results]) => {
-      console.log('Informacion recuperada');
-      results.forEach((result) => {
-        console.log(result);
-      });
       res.json(results)
     })
     .catch((err) => {
       throw err
     });
-
 });
 
 // peticion al servidor para hacer login
 server.post('/login', (req, res) => {
-  console.log(req.body);
+  const password = req.body.password;
+  const email = req.body.email;
   connection
-    .query('SELECT passwordUser, email FROM users WHERE passwordUser = ? AND email= ?', [req.body.password, req.body.email])
+    .query('SELECT passwordUser, email FROM users WHERE passwordUser = ? AND email= ?', [password, email])
     .then(([results]) => {
       let response;
       if (results.length) {
@@ -91,18 +82,17 @@ server.post('/login', (req, res) => {
     });
 })
 
-server.get('/movie/:movieId', (req,res)=>{
+// endpoint para ver el detalle de cada película
+server.get('/movie/:movieId', (req, res) => {
   const movieId = parseInt(req.params.movieId);
   connection
     .query(`SELECT * FROM movies, actors, rel_movies_actors WHERE idMovie = ${movieId} AND fk_actors = idActor AND fk_movies = idMovie`)
     .then(([results]) => {
-      console.log(results)
       res.render('template', results[0])
     })
     .catch((err) => {
       throw err
     });
-
 })
 
 //configurar el motor de plantillas
@@ -112,7 +102,7 @@ server.set('view engine', 'ejs')
 // servidor de estáticos
 server.use(express.static('./src/public-react'))
 server.use(express.static('./src/public-movies-images'))
-//ACTUALIZAR!!!!!!!!!!!
+
 
 
 
